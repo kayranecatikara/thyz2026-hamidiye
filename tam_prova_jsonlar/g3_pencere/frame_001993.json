@@ -1,0 +1,37 @@
+{
+ "frame": "frames/1993/",
+ "reference_predictions": [
+  {
+   "reference": "ref://Referans_Nesne_01.JPG",
+   "frame": "frames/1993/",
+   "top_left_x": "425.17706298828125",
+   "top_left_y": "510.4624938964844",
+   "bottom_right_x": "646.9830322265625",
+   "bottom_right_y": "861.36669921875"
+  },
+  {
+   "reference": "ref://Referans_Nesne_02.JPG",
+   "frame": "frames/1993/",
+   "top_left_x": "724.7994995117188",
+   "top_left_y": "556.8394775390625",
+   "bottom_right_x": "1345.89404296875",
+   "bottom_right_y": "1079"
+  },
+  {
+   "reference": "ref://Referans_Nesne_03.JPG",
+   "frame": "frames/1993/",
+   "top_left_x": "937.93408203125",
+   "top_left_y": "601.5640869140625",
+   "bottom_right_x": "1047.8619384765625",
+   "bottom_right_y": "670.3344116210938"
+  },
+  {
+   "reference": "ref://Referans_Nesne_04.JPG",
+   "frame": "frames/1993/",
+   "top_left_x": "452.88323974609375",
+   "top_left_y": "507.44921875",
+   "bottom_right_x": "648.3556518554688",
+   "bottom_right_y": "597.3922119140625"
+  }
+ ]
+}

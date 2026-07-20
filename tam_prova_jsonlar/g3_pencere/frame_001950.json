@@ -1,0 +1,21 @@
+{
+ "frame": "frames/1950/",
+ "reference_predictions": [
+  {
+   "reference": "ref://Referans_Nesne_02.JPG",
+   "frame": "frames/1950/",
+   "top_left_x": "809.39892578125",
+   "top_left_y": "0.0",
+   "bottom_right_x": "1676.13916015625",
+   "bottom_right_y": "1052.0374755859375"
+  },
+  {
+   "reference": "ref://Referans_Nesne_03.JPG",
+   "frame": "frames/1950/",
+   "top_left_x": "1223.377685546875",
+   "top_left_y": "926.59912109375",
+   "bottom_right_x": "1389.870361328125",
+   "bottom_right_y": "1007.0709228515625"
+  }
+ ]
+}

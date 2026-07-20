@@ -1,0 +1,13 @@
+{
+ "frame": "frames/1959/",
+ "reference_predictions": [
+  {
+   "reference": "ref://Referans_Nesne_02.JPG",
+   "frame": "frames/1959/",
+   "top_left_x": "733.18896484375",
+   "top_left_y": "0.0",
+   "bottom_right_x": "1607.1962890625",
+   "bottom_right_y": "1079"
+  }
+ ]
+}

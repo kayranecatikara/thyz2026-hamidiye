@@ -1,0 +1,36 @@
+# ── Veri setleri ve kareler (GB'larca; KURULUM.md'deki linklerden yeniden indirilir)
+assets/
+downloads/
+prova/
+prova2025/frames*
+prova2025/run_*
+prova2025/mock_*.csv
+prova2025/pred_*.csv
+gorev_1/*.MP4
+gorev_1/*.mp4
+
+# ── Çalışma zamanı üretimleri (yeniden üretilebilir)
+run_*/
+tam_prova_tmp/
+mock_referanslar/
+mock_gonderimler.jsonl
+tam_prova_jsonlar/frame_*.json
+*.mp4
+*.avi
+__pycache__/
+*.pyc
+
+# ── Çevrimdışı paket (3+ GB; binariler SP_SLAM3 reposundan derlenir)
+offline_bundle/
+
+# ── Gizli bilgiler (ASLA pushlanmaz)
+**/.env
+istemci/**/_logs/
+istemci/**/_images/
+
+# ── Tutulanlar (bilgi amaçlı):
+# prova2025/oturum*_gt.csv  -> kücük GT dosyaları repoda kalır
+# kanitlar/                 -> şifresi temizlenmiş yarışma kanıtları
+# gorev_1/birincil_run7_26l.pt (53MB) -> yarışma modeli repoda
+tests/**/build/
+yarisma_sent.jsonl
