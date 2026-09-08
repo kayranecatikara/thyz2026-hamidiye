@@ -48,7 +48,7 @@ tail -f ~/Masaüstü/test/havacilikta-yapay-zeka-yarismasi/TAKIM_BAGLANTI_ARAYUZ
 ```
 
 Logda arayacağın güven verici satırlar:
-- `Gorev1 hazir`, `Gorev3 ReferenceObjectDetector hazir`
+- `Gorev1 hazir`, `Gorev3 v2 (FastSAM+DINOv3, esiksiz kapi) hazir`
 - `Gorev2 kamera tespiti: genislik=#### -> ####.yaml`  ← kamera otomatik seçildi
 - `Gorev2 frame N: kaynak=slam xyz=(...)` ← kesintide SLAM konum üretiyor
 
@@ -95,8 +95,9 @@ Komutun başına eklenerek kullanılır, ör. `GOREV2_SETTINGS=... python3 main.
   Sağlık=1'de GT aynen geri (0 hata), sağlık=0'da SLAM konumu. 2025 verisinde
   Denklem-2: O2 8.8 / O3 4.3 / O4 4.7 m. Kamera kalibrasyonu ilk kareden otomatik:
   4000→4K yaml, 3840→cropA, 1920→1080p yaml, 640→termal.
-- **Görev 3:** FastSAM+DINOv2 hibrit + ELoFTR termal yolu (takım deposu hyz).
-  Emin olunmayan karede kutu GÖNDERMEZ (yanlış-pozitif koruması).
+- **Görev 3:** FastSAM + DINOv3 + ego-hareket katmanı (`gorev3_v2/`, bu repo).
+  Mutlak eşik YOK: kutu ancak takipçi kilitliyse ve o karede dedektör ürettiyse
+  gönderilir — emin olunmayan karede GÖNDERMEZ (yanlış-pozitif koruması).
 - **Fail-safe ilkesi:** her kareye tam 1 tahmin; hangi görev hata verirse versin kare
   boş-ama-geçerli çıktıyla ilerletilir (takılmak = oturumu kaybetmek).
 

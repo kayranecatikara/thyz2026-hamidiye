@@ -34,3 +34,7 @@ istemci/**/_images/
 # gorev_1/birincil_run7_26l.pt (53MB) -> yarışma modeli repoda
 tests/**/build/
 yarisma_sent.jsonl
+
+# ── Görev 3 model ağırlıkları (KURULUM.md §7 ile bir kez indirilir) ──
+FastSAM*.pt
+gorev3_v2/agirliklar/

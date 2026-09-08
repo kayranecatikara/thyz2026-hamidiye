@@ -25,10 +25,13 @@ ISTEMCI = os.path.expanduser(
     "~/Masaüstü/test/havacilikta-yapay-zeka-yarismasi/TAKIM_BAGLANTI_ARAYUZU")
 VIDEO = os.path.expanduser(
     "~/Masaüstü/teknofest_gorev2/gorev_1/THYZ_2026_Ornek_Veri_1.MP4")
-GT_CSV = os.path.expanduser(
-    "~/Masaüstü/hyz_gorev3/THYZ_2026_Ornek_Veri_Seti/THYZ_2026_Ornek_Veri_1_translation.csv")
-REF_DIR = os.path.expanduser(
-    "~/Masaüstü/hyz_gorev3/THYZ_2026_Ornek_Veri_Seti/THYZ_2026_Ornek_Veri_1_Referans_Nesneler")
+# Örnek veri seti eskiden Görev 3 klonunun (~/Masaüstü/hyz_gorev3) içinden
+# okunuyordu. Görev 3 artık bu depoda olduğu için o klon gerekmiyor; veri kökü
+# ORNEK_VERI_DIR ile verilir. Varsayılan eski yol — mevcut kurulumlar bozulmaz.
+ORNEK_VERI_DIR = os.path.expanduser(os.environ.get(
+    "ORNEK_VERI_DIR", "~/Masaüstü/hyz_gorev3/THYZ_2026_Ornek_Veri_Seti"))
+GT_CSV = os.path.join(ORNEK_VERI_DIR, "THYZ_2026_Ornek_Veri_1_translation.csv")
+REF_DIR = os.path.join(ORNEK_VERI_DIR, "THYZ_2026_Ornek_Veri_1_Referans_Nesneler")
 CIKTI = os.path.expanduser("~/Masaüstü/teknofest_gorev2/tam_prova_jsonlar")
 TMP = os.path.expanduser("~/Masaüstü/teknofest_gorev2/tam_prova_tmp")
 ORNEKLEME = 4           # 30fps -> 7.5 kare/sn

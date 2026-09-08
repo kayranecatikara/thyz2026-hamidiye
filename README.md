@@ -12,12 +12,12 @@ python3 main.py  (resmî TAKIM_BAGLANTI_ARAYUZU — yalnız object_detection_mod
         │  kareyi indirir → detect() → tahmini gönderir → sonraki kare
         ▼
 ┌─ Görev 1 ──────────┐ ┌─ Görev 2 ───────────────┐ ┌─ Görev 3 ─────────────┐
-│ YOLO26l (run7)     │ │ SP-SLAM3 (C++ süreç)    │ │ FastSAM + DINOv2      │
-│ + ped hakemi       │ │ SuperPoint + LightGlue  │ │ + ELoFTR (termal)     │
-│ + ped-içi insan    │ │ + yansımalı planar      │ │ emin değilse kutu     │
-│ + ego-hareket      │ │   hizalama (Umeyama'nın │ │ GÖNDERMEZ (FP cezalı) │
-│   takibi           │ │   el-yönü-güvenli hali) │ │                       │
-└─ gorev_1/          ┘ └─ gorev2_engine.py+SP_SLAM3┘ └─ hyz reposu (ayrı)  ┘
+│ YOLO26l (run7)     │ │ SP-SLAM3 (C++ süreç)    │ │ FastSAM + DINOv3      │
+│ + ped hakemi       │ │ SuperPoint + LightGlue  │ │ + ego-hareket takibi  │
+│ + ped-içi insan    │ │ + yansımalı planar      │ │ EŞİKSİZ kapı: kilit + │
+│ + ego-hareket      │ │   hizalama (Umeyama'nın │ │ dedektör kaynağı      │
+│   takibi           │ │   el-yönü-güvenli hali) │ │ emin değilse GÖNDERMEZ│
+└─ gorev_1/          ┘ └─ gorev2_engine.py+SP_SLAM3┘ └─ gorev3_v2/ (bu repo)┘
 ```
 
 **Çelik zırh ilkesi:** hangi görev hata verirse versin her kareye tam 1 geçerli
@@ -46,10 +46,23 @@ GT ile ölçek/çerçeve hizalaması. Kritik keşifler (ayrıntı: `SETUP_LOG.md
   2026 örnek videoda ~35 m (hatanın %98'i z; kalibrasyon dakikası düz uçuşsa z
   ölçeği gözlemlenemez — fiziksel sınır, xy hatası 5.4 m).
 
-### Görev 3 — Referans Nesne Tespiti ([hyz reposu](https://github.com/KubraNurTiryaki/hyz))
-Hibrit sistem: FastSAM segmentasyonu + DINOv2 kosinüs eşlemesi (+ termalde
-ELoFTR + MAGSAC). Pencere kurallarına yapısal uyum (kare başına ≤1 kutu) ve
-yanlış-pozitif koruması. Simülasyonda 6/7 referansta isabetli kutular.
+### Görev 3 — Referans Nesne Tespiti (`gorev3_v2/`, bu repo)
+FastSAM sınıf-bağımsız öneriler + DINOv3-S/16 kırpma gömmesi + ego-hareket
+tutarlılık katmanı. Ayırt edici yanı **eşiksiz gönderim kapısı**: mutlak kosinüs
+eşiği yok; kutu, takipçi kilitliyse ve o karede dedektör ürettiyse gönderilir.
+İki sinyal de ölçeksiz olduğu için videodan videoya taşınır.
+
+Ölçüm (mAP @ IoU 0.25, skorsuz — payload'da güven alanı yok):
+
+| Koşul | Bu yöntem | Önceki hibrit |
+|---|---|---|
+| v1 RGB · nesne her karede | **0.8960** | 0.5462 |
+| v1 RGB · gerçekçi (pencere paylı) | **0.6379** | 0.3990 |
+| v2 termal · **mühürlü** · nesne her karede | **0.7585** | 0.0519 |
+| v2 termal · **mühürlü** · gerçekçi | **0.5719** | 0.0519 |
+| kare başına süre | **153–279 ms** | 329–5088 ms |
+
+Ayrıntı, kabul/red kararları ve görüntülü karşılaştırma: `gorev3_belgeler/`.
 
 ## Depo haritası
 
@@ -70,7 +83,7 @@ yanlış-pozitif koruması. Simülasyonda 6/7 referansta isabetli kutular.
 ## İlişkili depolar (üçü birlikte tam sistem)
 1. **Bu repo** — motor, istemci, Görev 1, araçlar, belgeler
 2. **[kayranecatikara/SP_SLAM3](https://github.com/kayranecatikara/SP_SLAM3)** — SLAM C++ (modeller LFS'te: `lightglue.pt`, `cosplace.pt`, sözlük)
-3. **[KubraNurTiryaki/hyz](https://github.com/KubraNurTiryaki/hyz)** — Görev 3 hibrit sistemi
+> Görev 3 artık ayrı depoda değil — `gorev3_v2/` bu deponun içinde.
 
 ## Hızlı başlangıç
 Kurulum: `KURULUM.md` (adım adım). Yarışma günü: `YARISMA_GUNU.md` — özü:
@@ -95,7 +108,6 @@ her aşamayı doğrulayarak ilerle, sorun çıkarsa kendin çöz.
 KAYNAKLAR (üç repo, TAM şu yollara klonlanacak — kodlardaki varsayılanlar bu yolları bekler):
 - https://github.com/kayranecatikara/thyz2026-hamidiye  →  ~/Masaüstü/teknofest_gorev2
 - https://github.com/kayranecatikara/SP_SLAM3           →  ~/SP_SLAM3   (git-lfs ŞART)
-- https://github.com/KubraNurTiryaki/hyz                →  ~/Masaüstü/hyz_gorev3
 
 TALİMAT:
 1. Önce ~/Masaüstü/teknofest_gorev2 reposunu klonla ve içindeki KURULUM.md ile
@@ -115,8 +127,9 @@ TALİMAT:
      ~/Masaüstü/test/havacilikta-yapay-zeka-yarismasi/TAKIM_BAGLANTI_ARAYUZU
    - config/example.env'den config/.env oluştur; TEAM_NAME/PASSWORD/SUNUCU adresini
      KULLANICIYA SOR (e-postadaki bilgiler) — asla git'e ekleme.
-3. Görev 3 modellerini önden indirt: cd ~/Masaüstü/hyz_gorev3 && python3 test_offline.py
-   (üç model ✅ görmeli; sonraki koşularda HF_HUB_OFFLINE=1 kullanılır).
+3. Görev 3 ağırlıklarını önden indirt (ağ GEREKİR, bir kez):
+   cd ~/Masaüstü/teknofest_gorev2 && GOREV3_ALLOW_NETWORK=1 python3 -m gorev3_v2.onkontrol
+   (DINOv3 + FastSAM iner; sonraki koşularda paket HF_HUB_OFFLINE=1'i kendisi açar).
 4. KURULUM.md §10'daki DOĞRULAMA SIRASINI eksiksiz koş:
    alignment.py öz-testleri, Görev 1 model+sınıf doğrulaması ve (2025 O2 kareleri
    indirildiyse) resmi_mock.py ile 300 karelik uçtan uca yerel prova

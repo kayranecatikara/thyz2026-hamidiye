@@ -3,7 +3,8 @@
 Kural gereği resmi arayüzde YALNIZ bu dosya değiştirildi. Ağır kodlar dışarıda:
   Görev 1 (nesne tespiti)      : ~/Masaüstü/teknofest_gorev2/gorev_1/yarisma_pipeline.py
   Görev 2 (konum kestirimi)    : ~/Masaüstü/teknofest_gorev2/gorev2_engine.py (SP-SLAM3)
-  Görev 3 (referans nesne)     : ~/Masaüstü/hyz_gorev3/gorev3/ (SAM+DINO/ELoFTR hibrit)
+  Görev 3 (referans nesne)     : bu deponun içinde — gorev3_v2/ (FastSAM + DINOv3,
+                                 eşiksiz gönderim kapısı; harici klon GEREKMEZ)
 
 İlkeler:
   - HER kareye tam 1 tahmin gönderilir; hangi görev hata verirse versin kare
@@ -14,7 +15,7 @@ Kural gereği resmi arayüzde YALNIZ bu dosya değiştirildi. Ağır kodlar dı�
     sağlık=0'da SLAM tahmini. Kamera kalibrasyonu ilk kareden otomatik seçilir.
 
 Ortam değişkenleri (hepsi opsiyonel):
-  GOREV1_DIR, GOREV1_MODEL, GOREV2_DIR, GOREV2_SETTINGS, GOREV2_RUN_DIR, GOREV3_DIR
+  GOREV1_DIR, GOREV1_MODEL, GOREV2_DIR, GOREV2_SETTINGS, GOREV2_RUN_DIR, GOREV3_KOK
 """
 import logging
 import os
@@ -32,15 +33,20 @@ from .reference_prediction import ReferencePrediction
 GOREV2_DIR = os.environ.get(
     "GOREV2_DIR", os.path.expanduser("~/Masaüstü/teknofest_gorev2"))
 GOREV1_DIR = os.environ.get("GOREV1_DIR", os.path.join(GOREV2_DIR, "gorev_1"))
-GOREV3_DIR = os.environ.get(
-    "GOREV3_DIR", os.path.expanduser("~/Masaüstü/hyz_gorev3"))
-for _p in (GOREV2_DIR, GOREV1_DIR, GOREV3_DIR):
+# Görev 3 artık bu deponun kökünde: <depo>/gorev3_v2/ — harici klon yok.
+# DİKKAT: bu dosya kurulumda depo DIŞINA kopyalanıyor (KURULUM.md §2), o yüzden
+# kök __file__'dan türetilemez; depo kökü GOREV2_DIR'dir (GOREV1_DIR de öyle
+# türetiliyor). Depo içinden çalıştırma hâli için __file__ yolu da eklenir.
+GOREV3_KOK = os.environ.get("GOREV3_KOK", GOREV2_DIR)
+_DEPO_ICI = os.path.abspath(
+    os.path.join(os.path.dirname(__file__), os.pardir, os.pardir, os.pardir))
+for _p in (GOREV2_DIR, GOREV1_DIR, GOREV3_KOK, _DEPO_ICI):
     if _p not in sys.path:
         sys.path.insert(0, _p)
 
 from gorev2_engine import Gorev2Engine          # noqa: E402
 import yarisma_pipeline as g1                   # noqa: E402  (Görev 1)
-from gorev3.integrate import ReferenceObjectDetector  # noqa: E402
+from gorev3_v2.api import ReferenceObjectDetectorV2 as ReferenceObjectDetector  # noqa: E402
 
 
 class ObjectDetectionModel:
@@ -63,11 +69,11 @@ class ObjectDetectionModel:
         except Exception as e:
             logging.error(f"Gorev1 YUKLENEMEDI (bos tespitle devam): {e}")
 
-        # ── Görev 3: hibrit referans dedektörü — BİR kez yükle ──────────────
+        # ── Görev 3: eşiksiz referans dedektörü (gorev3_v2) — BİR kez yükle ──
         self.ref_detector = None
         try:
             self.ref_detector = ReferenceObjectDetector()
-            logging.info("Gorev3 ReferenceObjectDetector hazir")
+            logging.info("Gorev3 v2 (FastSAM+DINOv3, esiksiz kapi) hazir")
         except Exception as e:
             logging.error(f"Gorev3 YUKLENEMEDI (referans tahminsiz devam): {e}")
 

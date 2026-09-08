@@ -6,7 +6,6 @@ Her adım 2026 Temmuz'daki gerçek kurulumun kayıtlarından (SETUP_LOG.md) dam�
 > ⚠️ **YOLLAR SABİTTİR** — kodlardaki varsayılanlar bu yolları bekler:
 > - Bu repo → `~/Masaüstü/teknofest_gorev2`
 > - SLAM     → `~/SP_SLAM3`
-> - Görev 3  → `~/Masaüstü/hyz_gorev3`
 > - Resmî istemci → `~/Masaüstü/test/havacilikta-yapay-zeka-yarismasi/TAKIM_BAGLANTI_ARAYUZU`
 >   (bu repodaki `istemci/TAKIM_BAGLANTI_ARAYUZU` oraya kopyalanır)
 
@@ -27,7 +26,6 @@ git lfs install
 ```bash
 git clone https://github.com/kayranecatikara/SP_SLAM3.git ~/SP_SLAM3
 git clone https://github.com/kayranecatikara/thyz2026-hamidiye.git ~/Masaüstü/teknofest_gorev2
-git clone https://github.com/KubraNurTiryaki/hyz.git ~/Masaüstü/hyz_gorev3
 mkdir -p ~/Masaüstü/test/havacilikta-yapay-zeka-yarismasi
 cp -r ~/Masaüstü/teknofest_gorev2/istemci/TAKIM_BAGLANTI_ARAYUZU \
       ~/Masaüstü/test/havacilikta-yapay-zeka-yarismasi/
@@ -77,10 +75,13 @@ python3 -m venv ~/venvs/slam
 ~/venvs/slam/bin/pip install numpy opencv-python matplotlib
 ```
 
-## 7) Görev 3 modelleri (ilk çalıştırmada iner, önden tetikle)
+## 7) Görev 3 ağırlıkları (bir kez, ağ gerekir)
 ```bash
-cd ~/Masaüstü/hyz_gorev3 && python3 test_offline.py    # 3 model ✅ görmeli
+cd ~/Masaüstü/teknofest_gorev2
+GOREV3_ALLOW_NETWORK=1 python3 -m gorev3_v2.onkontrol   # DINOv3 + FastSAM-s.pt iner
 ```
+Çıktıda `modeller yüklendi` görmelisin. Ağırlıklar depoya konmaz (.gitignore);
+paket sonraki koşularda `HF_HUB_OFFLINE=1`'i kendisi açar — sahada ağ denemesi yapmaz.
 
 ## 8) İstemci kimlik bilgileri
 ```bash
