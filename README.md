@@ -127,9 +127,8 @@ TALİMAT:
      ~/Masaüstü/test/havacilikta-yapay-zeka-yarismasi/TAKIM_BAGLANTI_ARAYUZU
    - config/example.env'den config/.env oluştur; TEAM_NAME/PASSWORD/SUNUCU adresini
      KULLANICIYA SOR (e-postadaki bilgiler) — asla git'e ekleme.
-3. Görev 3 ağırlıklarını önden indirt (ağ GEREKİR, bir kez):
-   cd ~/Masaüstü/teknofest_gorev2 && GOREV3_ALLOW_NETWORK=1 python3 -m gorev3_v2.onkontrol
-   (DINOv3 + FastSAM iner; sonraki koşularda paket HF_HUB_OFFLINE=1'i kendisi açar).
+3. Görev 3 ağırlıkları depoyla birlikte gelir (indirme yok). Yalnız doğrula:
+   cd ~/Masaüstü/teknofest_gorev2 && python3 -m gorev3_v2.onkontrol
 4. KURULUM.md §10'daki DOĞRULAMA SIRASINI eksiksiz koş:
    alignment.py öz-testleri, Görev 1 model+sınıf doğrulaması ve (2025 O2 kareleri
    indirildiyse) resmi_mock.py ile 300 karelik uçtan uca yerel prova

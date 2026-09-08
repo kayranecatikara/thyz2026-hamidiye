@@ -75,13 +75,16 @@ python3 -m venv ~/venvs/slam
 ~/venvs/slam/bin/pip install numpy opencv-python matplotlib
 ```
 
-## 7) Görev 3 ağırlıkları (bir kez, ağ gerekir)
+## 7) Görev 3 ağırlıkları — **indirme YOK**
+Ağırlıklar depoyla birlikte geliyor:
+`gorev3_v2/agirliklar/` (DINOv3-S/16, 82 MB) ve `FastSAM-s.pt` (23 MB).
+Paket, yanındaki `agirliklar/` klasörünü Hugging Face önbelleği olarak **kendisi**
+kullanır; ev dizinine kopyalamak da gerekmez. Yalnız doğrula:
 ```bash
-cd ~/Masaüstü/teknofest_gorev2
-GOREV3_ALLOW_NETWORK=1 python3 -m gorev3_v2.onkontrol   # DINOv3 + FastSAM-s.pt iner
+cd ~/Masaüstü/teknofest_gorev2 && python3 -m gorev3_v2.onkontrol
 ```
-Çıktıda `modeller yüklendi` görmelisin. Ağırlıklar depoya konmaz (.gitignore);
-paket sonraki koşularda `HF_HUB_OFFLINE=1`'i kendisi açar — sahada ağ denemesi yapmaz.
+Çıktıda `modeller yüklendi` görmelisin. Paket ayrıca `HF_HUB_OFFLINE=1`'i içe
+aktarılırken kendisi açar — sahada ağa çıkmayı hiç denemez.
 
 ## 8) İstemci kimlik bilgileri
 ```bash

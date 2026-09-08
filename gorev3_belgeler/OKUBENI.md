@@ -22,7 +22,7 @@ bu yüzden çağıran taraf hiç değişmedi.
 | `OLCUM.md` | Yer gerçeğinin nasıl üretildiği — rakamların geçerliliği buna dayanıyor |
 | `PROTOKOL_NOTLARI.md` | Resmî arayüz kodundan çıkarılan, şartnamede yazmayan ayrıntılar |
 | `GENIS_KIYAS.md` | Videodan geometriyle üretilen büyük örneklemli teyit kümesi |
-| `AGIRLIKLAR.md` | Model ağırlıkları (depoda değil; `KURULUM.md` §7 ile bir kez iner) |
+| `AGIRLIKLAR.md` | Model ağırlıkları — **depoyla birlikte geliyor**, indirme adımı yok |
 
 ## Bir bakışta
 

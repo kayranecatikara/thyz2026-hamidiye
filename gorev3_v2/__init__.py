@@ -11,6 +11,15 @@ denetler ve eksikse ERKEN, anlaşılır biçimde hata verir.
 """
 import os
 
+# PAKETLE GELEN AĞIRLIKLAR: paketin yanındaki `agirliklar/` klasörü bir Hugging
+# Face önbelleğidir. Varsa HF_HUB_CACHE oraya çevrilir — böylece ne indirme ne de
+# kullanıcının ev dizinine kopyalama adımı gerekir; klonla ve çalıştır.
+# Kullanıcı kendi HF_HOME/HF_HUB_CACHE'ini ayarladıysa ona DOKUNULMAZ.
+_AGIRLIK = os.path.join(os.path.dirname(os.path.abspath(__file__)), "agirliklar")
+if os.path.isdir(_AGIRLIK) and not (
+        os.environ.get("HF_HUB_CACHE") or os.environ.get("HF_HOME")):
+    os.environ["HF_HUB_CACHE"] = _AGIRLIK
+
 if os.environ.get("GOREV3_ALLOW_NETWORK") != "1":
     os.environ.setdefault("HF_HUB_OFFLINE", "1")
     os.environ.setdefault("TRANSFORMERS_OFFLINE", "1")

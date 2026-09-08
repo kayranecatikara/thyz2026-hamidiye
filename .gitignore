@@ -35,6 +35,7 @@ istemci/**/_images/
 tests/**/build/
 yarisma_sent.jsonl
 
-# ── Görev 3 model ağırlıkları (KURULUM.md §7 ile bir kez indirilir) ──
-FastSAM*.pt
-gorev3_v2/agirliklar/
+# ── Görev 3 ağırlıkları DEPODA (klonla ve çalıştır; indirme adımı yok) ──
+# Paket, yanındaki gorev3_v2/agirliklar/ klasörünü HF önbelleği olarak kullanır.
+# Yalnız yarım kalmış indirme artıkları dışarıda:
+*.incomplete
